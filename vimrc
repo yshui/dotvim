@@ -89,8 +89,6 @@ let g:notmuch_folders = [
 
 let g:notmuch_folders_count_threads = 1
 
-let g:tern#command = ["node", '/home/shui/.vim/bundle/tern/node_modules/tern/bin/tern', '--no-port-file']
-
 let g:syntastic_python_python_exec = '/usr/bin/python'
 "let g:syntastic_python_checkers=['python', 'py3kwarn']
 "

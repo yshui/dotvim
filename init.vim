@@ -25,6 +25,7 @@ set mouse=a
 syntax enable
 
 set hlsearch
+set backup
 set backupdir=$HOME/.vimf/backup,.
 set directory=$HOME/.vimf/swap,.
 set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -104,8 +105,6 @@ let g:notmuch_folders = [
 \ ]
 
 let g:notmuch_folders_count_threads = 1
-
-let g:tern#command = ["node", '/home/shui/.vim/bundle/tern/node_modules/tern/bin/tern', '--no-port-file']
 
 let g:neomake_python_enabled_makers = ['pylint', 'python']
 let g:syntastic_python_python_exec = '/usr/bin/python'
