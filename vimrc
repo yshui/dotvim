@@ -11,7 +11,10 @@ call pathogen#infect()
 
 filetype plugin on
 autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js call UPDATE_TAGS()
+
 source $VIMRUNTIME/menu.vim
+source $HOME/.vim/neocache.vim
+
 set backupdir=/home/shui/.vimf/backup,.
 set directory=/home/shui/.vimf/swap,.
 set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -30,23 +33,13 @@ set wcm=<C-Z>
 map <F4> :emenu <C-Z>
 au BufRead,BufNewFile * let b:start_time=localtime()
 set completeopt=longest,menu,menuone,preview,longest
+set viminfo='10,\"100,:20,%,n~/.viminfo
 
 set smartindent
 
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex --interaction=nonstopmode $*'
 
-
-let OmniCpp_DefaultNamespaces=["std"]
-let OmniCpp_GlobalScopeSearch=1 " 0 or 1
-let OmniCpp_NamespaceSearch=1 " 0 , 1 or 2
-let OmniCpp_DisplayMode=1
-let OmniCpp_ShowScopeInAbbr=0
-let OmniCpp_ShowPrototypeInAbbr=1
-let OmniCpp_ShowAccess=1
-let OmniCpp_MayCompleteDot=1
-let OmniCpp_MayCompleteArrow=1
-let OmniCpp_MayCompleteScope=1
 set ofu=syntaxcomplete#Complete
 
 let g:SuperTabDefaultCompletionType='context'
@@ -57,6 +50,9 @@ let g:SuperTabLongestHighlight=1
 let g:miniBufExplMapCTabSwitchBufs=0
 
 let g:tex_flavor='latex'
+
+let g:clang_use_library=1
+let g:clang_complete_auto=1
 
 let g:gardener_light_comments=1
 let g:gardener_blank=1
@@ -92,7 +88,7 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+"autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1  " Rails support
 autocmd FileType java setlocal noexpandtab " do not expand tabs to spaces for Java

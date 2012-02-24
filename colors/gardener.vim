@@ -170,6 +170,7 @@ if has("gui_running")
     hi htmlH4           guibg=bg          guifg=#b2b2b2    gui=bold
     hi htmlH5           guibg=bg          guifg=#9e9e9e    gui=bold
     hi htmlH6           guibg=bg          guifg=#8a8a8a    gui=bold
+    hi Pmenu  		
 
 else
 " Colors for the User Interface.
