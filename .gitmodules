@@ -3,7 +3,7 @@
 	url = https://github.com/vim-scripts/vim-coffee-script.git
 [submodule "bundle/vim-latex"]
 	path = bundle/vim-latex
-	url = git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+	url = git://github.com/jcf/vim-latex.git
 [submodule "bundle/vim-session"]
 	path = bundle/vim-session
 	url = https://github.com/xolox/vim-session.git
