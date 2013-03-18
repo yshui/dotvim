@@ -170,7 +170,7 @@ if has("gui_running")
     hi htmlH4           guibg=bg          guifg=#b2b2b2    gui=bold
     hi htmlH5           guibg=bg          guifg=#9e9e9e    gui=bold
     hi htmlH6           guibg=bg          guifg=#8a8a8a    gui=bold
-    hi Pmenu  		
+    hi Pmenu  		guibg    
 
 else
 " Colors for the User Interface.
@@ -228,7 +228,7 @@ else
     exec "hi Function       cterm=BOLD   ctermfg=229  ctermbg=NONE"
     exec "hi Statement      cterm=BOLD   ctermfg=230  ctermbg=NONE"
 
-    exec "hi Define         cterm=BOLD   ctermfg=68  ctermbg=NONE"
+    exec "hi Define         cterm=BOLD   ctermfg=147  ctermbg=NONE"
     exec "hi Conditional    cterm=BOLD   ctermfg=149  ctermbg=NONE"
 
     exec "hi Repeat         cterm=BOLD   ctermfg=208  ctermbg=NONE"
@@ -271,4 +271,5 @@ endif
 
 let g:colors_name = "gardener"
 let colors_name   = "gardener"
-
+autocmd FileType c,cpp,javascript highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd FileType c,cpp,javascript match ExtraWhitespace /\s\+$/

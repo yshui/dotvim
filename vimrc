@@ -6,11 +6,10 @@ function! UPDATE_TAGS()
 	unlet _f_
 	unlet _resp
 endfunction
-
 call pathogen#infect()
 
 filetype plugin on
-autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js call UPDATE_TAGS()
+autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
 
 source $VIMRUNTIME/menu.vim
 source $HOME/.vim/neocache.vim
@@ -18,7 +17,6 @@ source $HOME/.vim/neocache.vim
 set backupdir=/home/shui/.vimf/backup,.
 set directory=/home/shui/.vimf/swap,.
 set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-
 set undodir=~/.vimf/undodir
 set undofile
 set undolevels=1000
@@ -38,14 +36,10 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set smartindent
 
 let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_CompileRule_pdf='xelatex --interaction=nonstopmode $*'
+let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
 
 set ofu=syntaxcomplete#Complete
-
-let g:SuperTabDefaultCompletionType='context'
-"let g:SuperTabContextDefaultCompletionType="<c-x><c-o>"
-let g:SuperTabLongestEnhanced=1
-let g:SuperTabLongestHighlight=1
+let g:neocomplcache_enable_quick_match = 1
 
 let g:miniBufExplMapCTabSwitchBufs=0
 
@@ -53,6 +47,9 @@ let g:tex_flavor='latex'
 
 let g:clang_use_library=1
 let g:clang_complete_auto=1
+let g:clang_hl_errors=1
+let g:clang_periodic_quickfix=1
+nmap <leader>uq :call g:ClangUpdateQuickFix()<CR>
 
 let g:gardener_light_comments=1
 let g:gardener_blank=1
@@ -61,23 +58,27 @@ if v:progname =~? "gvim"
 	colors lucius
 endif
 
-if $TERM =~? "rxvt"
+if $TERM =~? "256color"
 	colorscheme gardener
 else
 	colorscheme default
 endif
 
+nmap F :call Mydict()<CR>
+
 
 map <silent> <C-N> :let @/=""<CR>
 map <F2> :!/usr/bin/ctags -R --fields=+lKiSz --c-kinds=+cdefgmnpstuvx --c++-kinds=+cdefgmnpstuvx --extra=+q .<CR>
 nnoremap <F7> "+p
+nmap <C-\> :!sdcv "<cword>" <C-R>=expand("<cword>")<CR><CR>
+imap <C-\> <C-o>:!sdcv "<cword>" <C-R>=expand("<cword>")<CR><CR>
+
 "set t_Co=256
-"set t_AB=[48;5;%dm
+"set t_AB=[48;5;%dm jump
 "set t_AF=[38;5;%dm
 "let &t_SI="\<Esc>]50;CursorShape=1\x7"
 "let &t_EI="\<Esc>]50;CursorShape=0\x7"
 
-let g:tabular_loaded=1
 "au CursorHoldI * call UpdateFile()
 "au CursorHold * call UpdateFile()
 "au BufWritePost * call delete(expand("%:p").'.bkup')
@@ -93,6 +94,7 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1  " Rails support
 autocmd FileType java setlocal noexpandtab " do not expand tabs to spaces for Java
 
+
 runtime ftplugin/man.vim
 nnoremap <silent> <F8> :TlistToggle<CR>
 noremap  <buffer> <silent> <Up>   gk
@@ -101,5 +103,36 @@ noremap  <buffer> <silent> <Home> g<Home>
 noremap  <buffer> <silent> <End>  g<End>
 inoremap <buffer> <silent> <Home> <C-o>g<Home>
 inoremap <buffer> <silent> <End>  <C-o>g<End>
+
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neocomplcache_snippets_expand)
+smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+inoremap <expr><space>  pumvisible() ? neocomplcache#close_popup() . "\<SPACE>" : "\<SPACE>"
+inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+" SuperTab like snippets behavior.
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+"inoremap <expr><CR>  neocomplcache#smart_close_popup()
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
+inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
+
+
+"List Char
+set list!
+set listchars=tab:>-,trail:-,extends:>
 
 
