@@ -12,10 +12,9 @@ filetype plugin on
 autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
 
 source $VIMRUNTIME/menu.vim
-source $HOME/.vim/neocache.vim
 
-set backupdir=/home/shui/.vimf/backup,.
-set directory=/home/shui/.vimf/swap,.
+set backupdir=$HOME/.vimf/backup,.
+set directory=$HOME/.vimf/swap,.
 set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set undodir=~/.vimf/undodir
 set undofile
