@@ -34,11 +34,17 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 
 set smartindent
 
+let g:ycm_global_ycm_extra_conf = "~/.ycm.py"
+
+let g:syntastic_always_populate_loc_list=1
+
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
 
 set ofu=syntaxcomplete#Complete
-let g:neocomplcache_enable_auto_select = 0
+
+"let g:neocomplcache_enable_auto_select = 0
+"let g:neocomplcache_enable_smart_case = 1
 
 let g:miniBufExplMapCTabSwitchBufs=0
 
@@ -46,10 +52,10 @@ let g:tex_flavor='latex'
 
 let g:session_autosave = 'no'
 
-let g:clang_use_library=1
-let g:clang_complete_auto=1
-let g:clang_hl_errors=1
-let g:clang_periodic_quickfix=1
+"let g:clang_use_library=1
+"let g:clang_complete_auto=1
+"let g:clang_hl_errors=1
+"let g:clang_periodic_quickfix=1
 nmap <leader>uq :call g:ClangUpdateQuickFix()<CR>
 
 let g:gardener_light_comments=1
@@ -57,12 +63,12 @@ let g:gardener_blank=1
 set background=dark
 if v:progname =~? "gvim"
 	colors lucius
-endif
-
-if $TERM =~? "256color"
-	colorscheme gardener
 else
-	colorscheme default
+	if $TERM =~? "256color"
+		colorscheme gardener
+	else
+		colorscheme default
+	endif
 endif
 
 nmap F :call Mydict()<CR>
@@ -108,23 +114,41 @@ noremap  <buffer> <silent> <End>  g<End>
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-inoremap <expr><space>  pumvisible() ? neocomplcache#close_popup() . "\<SPACE>" : "\<SPACE>"
-inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
 
+"inoremap <expr><C-g>     neocomplcache#undo_completion()
+"inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function()
+  "return neocomplcache#smart_close_popup() . "\<CR>"
+  "" For no inserting <CR> key.
+  ""return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+"endfunction
+
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"" <C-h>, <BS>: close popup and delete backword char.
+"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-y>  neocomplcache#close_popup()
+"inoremap <expr><C-e>  neocomplcache#cancel_popup()
+
+"if !exists('g:neocomplcache_omni_patterns')
+  "let g:neocomplcache_omni_patterns = {}
+"endif
+"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+"if !exists('g:neocomplcache_keyword_patterns')
+    "let g:neocomplcache_keyword_patterns = {}
+"endif
+"let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 "inoremap <expr><CR>  neocomplcache#smart_close_popup()
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
 

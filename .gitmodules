@@ -43,3 +43,18 @@
 [submodule "bundle/ycm"]
 	path = bundle/ycm
 	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "bundle/nc"]
+	path = bundle/nc
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/lucius"]
+	path = bundle/lucius
+	url = https://github.com/vim-scripts/Lucius.git
+[submodule "bundle/syn"]
+	path = bundle/syn
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "bundle/cc"]
+	path = bundle/cc
+	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule "bundle/ncc"]
+	path = bundle/ncc
+	url = https://github.com/Shougo/neocomplcache.vim.git
