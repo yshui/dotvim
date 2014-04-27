@@ -10,6 +10,7 @@ call pathogen#infect()
 
 filetype plugin on
 autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
+autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
 
 source $VIMRUNTIME/menu.vim
 
@@ -31,12 +32,17 @@ map <F4> :emenu <C-Z>
 au BufRead,BufNewFile * let b:start_time=localtime()
 set completeopt=longest,menu,menuone,preview,longest
 set viminfo='10,\"100,:20,%,n~/.viminfo
+au FileType c,cpp,vim call matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
+
+let g:lucius_use_bold=1
 
 let g:ycm_global_ycm_extra_conf = "~/.ycm.py"
 
 let g:syntastic_always_populate_loc_list=1
+
+let g:languagetool_jar = "$HOME/.vim/bundle/languagetool/languagetool/languagetool-commandline.jar"
 
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
@@ -51,6 +57,14 @@ let g:miniBufExplMapCTabSwitchBufs=0
 let g:tex_flavor='latex'
 
 let g:session_autosave = 'no'
+
+let g:notmuch_folders = [
+	\ [ 'new', 'tag:inbox and tag:unread' ],
+	\ [ 'inbox', 'tag:inbox' ],
+	\ [ 'important', 'tag:Important'],
+\ ]
+
+let g:notmuch_folders_count_threads = 0
 
 "let g:clang_use_library=1
 "let g:clang_complete_auto=1
@@ -157,4 +171,10 @@ inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
 set list!
 set listchars=tab:>-,trail:-,extends:>
 
+nnoremap y :YcmDiags
+nnoremap pg :YcmCompleter GoToDefinitionElseDeclaration
+nnoremap pd :YcmCompleter GoToDefinition
+nnoremap pc :YcmCompleter GoToDeclaration
 
+
+nnoremap ; :

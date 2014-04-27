@@ -13,9 +13,6 @@
 [submodule "bundle/tabular"]
 	path = bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule "bundle/zencoding"]
-	path = bundle/zencoding
-	url = https://github.com/mattn/zencoding-vim.git
 [submodule "bundle/clang_complete"]
 	path = bundle/clang_complete
 	url = https://github.com/Rip-Rip/clang_complete.git
@@ -58,3 +55,15 @@
 [submodule "bundle/ncc"]
 	path = bundle/ncc
 	url = https://github.com/Shougo/neocomplcache.vim.git
+[submodule "bundle/nt"]
+	path = bundle/nt
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle/emmet"]
+	path = bundle/emmet
+	url = https://github.com/mattn/emmet-vim
+[submodule "bundle/languagetool"]
+	path = bundle/languagetool
+	url = git@github.com:vim-scripts/LanguageTool.git
+[submodule "bundle/md"]
+	path = bundle/md
+	url = git@github.com:plasticboy/vim-markdown.git

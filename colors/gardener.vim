@@ -191,7 +191,7 @@ else
 
     exec "hi Linear         cterm=NONE   ctermfg=248   ctermbg=NONE"
 
-    exec "hi Directory      cterm=NONE   ctermfg=64    ctermbg=NONE"
+    exec "hi Directory      cterm=NONE   ctermfg=222    ctermbg=NONE"
 
     exec "hi IncSearch      cterm=NONE   ctermfg=255   ctermbg=25"
 
@@ -273,3 +273,5 @@ let g:colors_name = "gardener"
 let colors_name   = "gardener"
 autocmd FileType c,cpp,javascript highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd FileType c,cpp,javascript match ExtraWhitespace /\s\+$/
+hi ColorColumn ctermbg=red
+
