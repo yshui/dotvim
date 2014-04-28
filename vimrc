@@ -40,6 +40,13 @@ let g:lucius_use_bold=1
 
 let g:ycm_global_ycm_extra_conf = "~/.ycm.py"
 
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
 let g:syntastic_always_populate_loc_list=1
 
 let g:languagetool_jar = "$HOME/.vim/bundle/languagetool/languagetool/languagetool-commandline.jar"

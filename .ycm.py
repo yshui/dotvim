@@ -78,7 +78,12 @@ def FlagsForFile( filename, **kwargs ):
   dn = os.path.dirname(filename)
   while not os.path.isfile(dn + "/.ycm"):
     if dn == "/":
-        break
+        flags = []
+        AppendFileType(filename, flags)
+        return {
+          'flags': flags,
+          'do_cache': True
+        }
     dn = os.path.realpath(dn + "/..")
 
   flags_file = open(dn + "/.ycm")
