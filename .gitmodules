@@ -58,12 +58,15 @@
 [submodule "bundle/emmet"]
 	path = bundle/emmet
 	url = https://github.com/mattn/emmet-vim
-[submodule "bundle/languagetool"]
-	path = bundle/languagetool
-	url = git@github.com:vim-scripts/LanguageTool.git
 [submodule "bundle/md"]
 	path = bundle/md
 	url = git@github.com:plasticboy/vim-markdown.git
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = git@github.com:SirVer/ultisnips.git
+[submodule "bundle/snippets"]
+	path = bundle/snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "bundle/tern"]
+	path = bundle/tern
+	url = git@github.com:marijnh/tern_for_vim.git
