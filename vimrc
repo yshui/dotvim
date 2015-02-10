@@ -10,9 +10,12 @@ call pathogen#infect()
 
 filetype plugin on
 autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
-autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
+"autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
 
 source $VIMRUNTIME/menu.vim
+
+set mouse=a
+syntax enable
 
 set backupdir=$HOME/.vimf/backup,.
 set directory=$HOME/.vimf/swap,.
@@ -35,6 +38,8 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 au FileType c,cpp,vim call matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
+
+let delimitMate_expand_cr = 1
 
 let g:lucius_use_bold=1
 
@@ -71,7 +76,9 @@ let g:notmuch_folders = [
 	\ [ 'important', 'tag:Important'],
 \ ]
 
-let g:notmuch_folders_count_threads = 0
+let g:notmuch_folders_count_threads = 1
+
+let g:tern#command = ["node", '/home/shui/.vim/bundle/tern/node_modules/tern/bin/tern', '--no-port-file']
 
 "let g:clang_use_library=1
 "let g:clang_complete_auto=1
@@ -112,7 +119,8 @@ imap <C-\> <C-o>:!sdcv "<cword>" <C-R>=expand("<cword>")<CR><CR>
 "au BufWritePost * call delete(expand("%:p").'.bkup')
 " Turn on omni-completion for the appropriate file types.
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python set shiftwidth=2
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
@@ -121,7 +129,9 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1  " Rails support
 autocmd FileType java setlocal noexpandtab " do not expand tabs to spaces for Java
+autocmd FileType rust setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
 
+imap <C-n> <esc>nli
 
 runtime ftplugin/man.vim
 nnoremap <silent> <F8> :TlistToggle<CR>
@@ -129,12 +139,6 @@ noremap  <buffer> <silent> <Up>   gk
 noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> <Home> g<Home>
 noremap  <buffer> <silent> <End>  g<End>
-
-
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 "inoremap <expr><C-g>     neocomplcache#undo_completion()
 "inoremap <expr><C-l>     neocomplcache#complete_common_string()
