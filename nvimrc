@@ -9,19 +9,22 @@ endfunction
 call pathogen#infect()
 
 filetype plugin on
+filetype plugin indent on
 autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
+autocmd BufWritePost *.py Neomake
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
 "autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
 
 source $VIMRUNTIME/menu.vim
 
-
 set mouse=a
-if &term =~ '^screen'
-" tmux knows the extended mouse mode
-	set ttymouse=xterm2
-endif
 syntax enable
 
+set hlsearch
 set backupdir=$HOME/.vimf/backup,.
 set directory=$HOME/.vimf/swap,.
 set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -38,14 +41,24 @@ set wildmenu
 set cpo-=<
 set wcm=<C-Z>
 set laststatus=2
+set clipboard=unnamedplus
 map <F4> :emenu <C-Z>
 au BufRead,BufNewFile * let b:start_time=localtime()
 set completeopt=longest,menu,menuone,preview,longest
 set viminfo='10,\"100,:20,%,n~/.viminfo
-au FileType c,cpp,vim call matchadd('ColorColumn', '\%81v', 100)
+"au FileType c,cpp,vim let w:mcc=matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
-
+let g:airline_powerline_fonts = 1
+let g:neomake_error_sign = {
+    \ 'text': 'E>',
+    \ 'texthl': 'YcmErrorSection',
+    \ }
+let g:neomake_warning_sign = {
+    \ 'text': 'W>',
+    \ 'texthl': 'YcmWarningSection',
+    \ }
+let g:airline_theme = "wombat"
 let delimitMate_expand_cr = 1
 
 let g:sudoAuth = "sudo"
@@ -91,6 +104,7 @@ let g:notmuch_folders_count_threads = 1
 
 let g:tern#command = ["node", '/home/shui/.vim/bundle/tern/node_modules/tern/bin/tern', '--no-port-file']
 
+let g:neomake_python_enabled_makers = ['pylint', 'python']
 let g:syntastic_python_python_exec = '/usr/bin/python'
 "let g:syntastic_python_checkers=['python', 'py3kwarn']
 
@@ -119,8 +133,8 @@ nmap F :call Mydict()<CR>
 map <silent> <C-N> :let @/=""<CR>
 map <F2> :!/usr/bin/ctags -R --fields=+lKiSz --c-kinds=+cdefgmnpstuvx --c++-kinds=+cdefgmnpstuvx --extra=+q .<CR>
 nnoremap <F7> "+p
-nmap <C-\> :!sdcv "<cword>" <C-R>=expand("<cword>")<CR><CR>
-imap <C-\> <C-o>:!sdcv "<cword>" <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\> :!dict "<cword>" <C-R>=expand("<cword>")<CR><CR>
+imap <C-\> <C-o>:!dict "<cword>" <C-R>=expand("<cword>")<CR><CR>
 
 "set t_Co=256
 "set t_AB=[48;5;%dm jump
@@ -201,4 +215,6 @@ nnoremap y :YcmDiags
 nnoremap pg :YcmCompleter GoToDefinitionElseDeclaration
 nnoremap pd :YcmCompleter GoToDefinition
 nnoremap pc :YcmCompleter GoToDeclaration
+
+
 nnoremap ; :

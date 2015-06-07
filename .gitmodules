@@ -70,3 +70,30 @@
 [submodule "bundle/delimitMate"]
 	path = bundle/delimitMate
 	url = https://github.com/Raimondi/delimitMate
+[submodule "bundle/systemd"]
+	path = bundle/systemd
+	url = git@github.com:Matt-Deacalion/vim-systemd-syntax.git
+[submodule "bundle/airline"]
+	path = bundle/airline
+	url = git@github.com:bling/vim-airline.git
+[submodule "bundle/bufferline"]
+	path = bundle/bufferline
+	url = git@github.com:bling/vim-bufferline.git
+[submodule "bundle/nmake"]
+	path = bundle/nmake
+	url = git@github.com:benekastah/neomake.git
+[submodule "bundle/clighter"]
+	path = bundle/clighter
+	url = git@github.com:bbchung/clighter.git
+[submodule "bundle/rope"]
+	path = bundle/rope
+	url = git@github.com:python-rope/ropevim.git
+[submodule "bundle/ctrlp"]
+	path = bundle/ctrlp
+	url = git@github.com:kien/ctrlp.vim
+[submodule "bundle/glsl"]
+	path = bundle/glsl
+	url = https://github.com/tikhomirov/vim-glsl
+[submodule "bundle/dutyl"]
+	path = bundle/dutyl
+	url = https://github.com/idanarye/vim-dutyl.git

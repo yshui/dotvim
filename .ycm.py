@@ -69,7 +69,7 @@ def AppendFileType(filename, flags):
         return
 
   if filename.endswith(".cpp") or filename.endswith(".hpp") \
-    or filename.endswith(".cxx"):
+    or filename.endswith(".cxx") or filename.endswith(".cc"):
     flags.extend(["-x", "c++"])
   elif filename.endswith(".c") or filename.endswith(".h"):
     flags.extend(["-x", "c"])
