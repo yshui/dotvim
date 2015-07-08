@@ -49,6 +49,9 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 "au FileType c,cpp,vim let w:mcc=matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
+
+let g:dutyl_neverAddClosingParen=1
+let g:dutyl_stdImportPaths=['/usr/include/dlang/dmd']
 let g:airline_powerline_fonts = 1
 let g:neomake_error_sign = {
     \ 'text': 'E>',

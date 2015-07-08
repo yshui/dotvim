@@ -93,6 +93,12 @@ let g:tern#command = ["node", '/home/shui/.vim/bundle/tern/node_modules/tern/bin
 
 let g:syntastic_python_python_exec = '/usr/bin/python'
 "let g:syntastic_python_checkers=['python', 'py3kwarn']
+"
+let g:neomake_d_dub_maker = {
+	\ 'exe' : 'dub',
+	\ 'args' : ['build'],
+	\ 'errorformat' : '%f(%l): %m'
+}
 
 "let g:clang_use_library=1
 "let g:clang_complete_auto=1
