@@ -100,3 +100,6 @@
 [submodule "bundle/ts"]
 	path = bundle/ts
 	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "bundle/airline-themes"]
+	path = bundle/airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
