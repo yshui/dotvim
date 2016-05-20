@@ -97,3 +97,6 @@
 [submodule "bundle/dutyl"]
 	path = bundle/dutyl
 	url = https://github.com/idanarye/vim-dutyl.git
+[submodule "bundle/ts"]
+	path = bundle/ts
+	url = https://github.com/leafgarland/typescript-vim.git
