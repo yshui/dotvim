@@ -61,9 +61,6 @@
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = git@github.com:SirVer/ultisnips.git
-[submodule "bundle/snippets"]
-	path = bundle/snippets
-	url = https://github.com/honza/vim-snippets.git
 [submodule "bundle/tern"]
 	path = bundle/tern
 	url = git@github.com:marijnh/tern_for_vim.git
