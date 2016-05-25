@@ -32,7 +32,7 @@ set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,euc-jp,euc-kr,lati
 set undodir=~/.vimf/undodir
 set undofile
 set undolevels=1000
-set undoreload=10000 
+set undoreload=10000
 set updatetime=4000
 set tags=tags;/
 set backspace=2
@@ -45,15 +45,20 @@ set laststatus=2
 set clipboard=unnamedplus
 map <F4> :emenu <C-Z>
 au BufRead,BufNewFile * let b:start_time=localtime()
-set completeopt=longest,menu,menuone,preview,longest
-set viminfo='10,\"100,:20,%,n~/.viminfo
+set completeopt=menu,menuone,preview
+set shada=!,'150,<100,/50,:50,r/tmp,s256
 "au FileType c,cpp,vim let w:mcc=matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
 
+let g:deoplete#enable_at_startup = 1
+
 let g:dutyl_neverAddClosingParen=1
 let g:dutyl_stdImportPaths=['/usr/include/dlang/dmd']
+
 let g:airline_powerline_fonts = 1
+let g:airline_theme = "wombat"
+
 let g:neomake_error_sign = {
     \ 'text': 'E>',
     \ 'texthl': 'YcmErrorSection',
@@ -62,7 +67,6 @@ let g:neomake_warning_sign = {
     \ 'text': 'W>',
     \ 'texthl': 'YcmWarningSection',
     \ }
-let g:airline_theme = "wombat"
 let delimitMate_expand_cr = 1
 
 let g:sudoAuth = "sudo"
@@ -72,16 +76,7 @@ let g:lucius_use_bold=1
 
 let g:ycm_global_ycm_extra_conf = "~/.ycm.py"
 
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
 let g:syntastic_always_populate_loc_list=1
-
-let g:languagetool_jar = "$HOME/.vim/bundle/languagetool/languagetool/languagetool-commandline.jar"
 
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
@@ -89,32 +84,14 @@ let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
 
 set ofu=syntaxcomplete#Complete
 
-"let g:neocomplcache_enable_auto_select = 0
-"let g:neocomplcache_enable_smart_case = 1
-
 let g:miniBufExplMapCTabSwitchBufs=0
 
 let g:tex_flavor='latex'
 
 let g:session_autosave = 'no'
 
-let g:notmuch_folders = [
-	\ [ 'new', 'tag:inbox and tag:unread' ],
-	\ [ 'inbox', 'tag:inbox' ],
-	\ [ 'important', 'tag:Important'],
-\ ]
-
-let g:notmuch_folders_count_threads = 1
-
-let g:neomake_python_enabled_makers = ['pylint', 'python']
 let g:syntastic_python_python_exec = '/usr/bin/python'
 "let g:syntastic_python_checkers=['python', 'py3kwarn']
-
-"let g:clang_use_library=1
-"let g:clang_complete_auto=1
-"let g:clang_hl_errors=1
-"let g:clang_periodic_quickfix=1
-nmap <leader>uq :call g:ClangUpdateQuickFix()<CR>
 
 let g:gardener_light_comments=1
 let g:gardener_blank=1
@@ -138,15 +115,6 @@ nnoremap <F7> "+p
 nmap <C-\> :!dict "<cword>" <C-R>=expand("<cword>")<CR><CR>
 imap <C-\> <C-o>:!dict "<cword>" <C-R>=expand("<cword>")<CR><CR>
 
-"set t_Co=256
-"set t_AB=[48;5;%dm jump
-"set t_AF=[38;5;%dm
-"let &t_SI="\<Esc>]50;CursorShape=1\x7"
-"let &t_EI="\<Esc>]50;CursorShape=0\x7"
-
-"au CursorHoldI * call UpdateFile()
-"au CursorHold * call UpdateFile()
-"au BufWritePost * call delete(expand("%:p").'.bkup')
 " Turn on omni-completion for the appropriate file types.
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set shiftwidth=4
@@ -208,6 +176,16 @@ noremap  <buffer> <silent> <End>  g<End>
 
 inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
 
+" Expand snippets on tab if snippets exists, otherwise do autocompletion
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : pumvisible() ? "\<C-n>" : "\<TAB>"
+" If popup window is visible do autocompletion from back
+imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Fix for jumping over placeholders for neosnippet
+smap <expr><TAB> neosnippet#jumpable() ?
+\ "\<Plug>(neosnippet_jump)"
+\: "\<TAB>"
 
 "List Char
 set list!
@@ -220,3 +198,5 @@ nnoremap pc :YcmCompleter GoToDeclaration
 
 
 nnoremap ; :
+
+cnoreabbrev Man Snman
