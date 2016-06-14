@@ -6,7 +6,43 @@ function! UPDATE_TAGS()
 	unlet _f_
 	unlet _resp
 endfunction
-call pathogen#infect()
+
+set runtimepath^=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim/
+
+call dein#begin(expand('~/.config/nvim/dein/'))
+
+call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/deoplete.nvim')
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('othree/html5.vim')
+call dein#add('alvan/vim-closetag')
+call dein#add('tpope/vim-surround')
+call dein#add('chrisbra/SudoEdit.vim')
+call dein#add('pangloss/vim-javascript')
+call dein#add('scrooloose/nerdcommenter')
+call dein#add('scrooloose/syntastic')
+call dein#add('scrooloose/nerdtree')
+call dein#add('mattn/emmet-vim')
+call dein#add('plasticboy/vim-markdown')
+call dein#add('jiangmiao/auto-pairs')
+call dein#add('Matt-Deacalion/vim-systemd-syntax')
+call dein#add('neomake/neomake')
+call dein#add('idanarye/vim-dutyl')
+call dein#add('leafgarland/typescript-vim')
+call dein#add('nhooyr/neoman.vim')
+call dein#add('vim-scripts/Lucius')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes', {'depends' : ['vim-airline']})
+call dein#add('bling/vim-bufferline')
+call dein#add('ternjs/tern_for_vim', { 'build': 'npm install' })
+call dein#add('carlitux/deoplete-ternjs', {'depends': ['deoplete.nvim', 'tern_for_vim']})
+call dein#add('zchee/deoplete-clang', {'depends' : ['deoplete.nvim']})
+
+call dein#end()
+
+if dein#check_install()
+  call dein#install()
+endif
 
 filetype plugin on
 filetype plugin indent on
@@ -129,7 +165,7 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1  " Rails support
 autocmd FileType java setlocal noexpandtab " do not expand tabs to spaces for Java
 autocmd FileType rust setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
-
+au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 imap <C-n> <esc>nli
 
 runtime ftplugin/man.vim
