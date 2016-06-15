@@ -53,6 +53,7 @@ call dein#add('bling/vim-bufferline')
 call dein#add('ternjs/tern_for_vim', { 'build': 'npm install' })
 call dein#add('carlitux/deoplete-ternjs', {'depends': ['deoplete.nvim', 'tern_for_vim']})
 call dein#add('zchee/deoplete-clang', {'depends' : ['deoplete.nvim']})
+call dein#add('majutsushi/tagbar')
 
 call dein#end()
 
@@ -202,7 +203,7 @@ let g:neomake_c_gccw_maker = {
 \ }
 let g:neomake_c_clangw_maker = {
    \ 'exe': $HOME."/.config/nvim/cdb_wrapper",
-   \ 'args': ['clangw', '-fsyntax-only', '-Wall', '-Wextra'],
+   \ 'args': ['clang', '-fsyntax-only', '-Wall', '-Wextra'],
    \ 'errorformat':
       \ '%-G%f:%s:,' .
       \ '%f:%l:%c: %trror: %m,' .
@@ -212,7 +213,7 @@ let g:neomake_c_clangw_maker = {
       \ '%f:%l: %tarning: %m,'.
       \ '%f:%l: %m',
 \ }
-let g:neomake_c_enabled_makers = ['clangw', 'gccw']
+let g:neomake_c_enabled_makers = ['clangw', 'clangtidy']
 "}}}
 "}}}
 
@@ -236,7 +237,8 @@ map <silent> <C-N> :let @/=""<CR>
 map <F2> :!/usr/bin/ctags -R --fields=+lKiSz --c-kinds=+cdefgmnpstuvx --c++-kinds=+cdefgmnpstuvx --extra=+q .<CR>
 imap <C-n> <esc>nli
 
-nnoremap <silent> <F8> :TlistToggle<CR>
+inoremap <silent> <F8> <C-\><C-O>:TagbarToggle<CR>
+nnoremap <silent> <F8> :TagbarToggle<CR>
 noremap  <buffer> <silent> <Up>   gk
 noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> <Home> g<Home>
