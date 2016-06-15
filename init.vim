@@ -12,6 +12,12 @@ function! s:is_whitespace() "{{{
 	let col = col('.') - 1
 	return ! col || getline('.')[col - 1] =~? '\s'
 endfunction "}}}
+
+function! s:dein_clear_unused() "{{{
+	return map(dein#check_clean(), "delete(v:val, 'rf')")
+endfunction "}}}
+
+command DeinClear call s:dein_clear_unused()
 "}}}
 
 "{{{ Dein.vim plugins
@@ -27,7 +33,6 @@ call dein#add('tpope/vim-surround')
 call dein#add('chrisbra/SudoEdit.vim')
 call dein#add('pangloss/vim-javascript')
 call dein#add('scrooloose/nerdcommenter')
-call dein#add('scrooloose/syntastic')
 call dein#add('scrooloose/nerdtree')
 call dein#add('mattn/emmet-vim')
 call dein#add('plasticboy/vim-markdown')
@@ -37,6 +42,10 @@ call dein#add('neomake/neomake')
 call dein#add('idanarye/vim-dutyl')
 call dein#add('leafgarland/typescript-vim')
 call dein#add('nhooyr/neoman.vim')
+call dein#add('junegunn/fzf', {'merged':0})
+call dein#add('junegunn/fzf.vim')
+call dein#add('kien/ctrlp.vim')
+call dein#add('yshui/deoplete-d', {'depends' : ['deoplete.nvim']})
 call dein#add('vim-scripts/Lucius')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes', {'depends' : ['vim-airline']})
@@ -52,10 +61,6 @@ if dein#check_install()
 endif
 "}}}
 
-filetype plugin on
-filetype plugin indent on
-autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
-autocmd BufWritePost *.py Neomake
 
 source $VIMRUNTIME/menu.vim
 
@@ -98,6 +103,7 @@ set ofu=syntaxcomplete#Complete
 "List Char
 set list!
 set listchars=tab:>-,trail:-,extends:>
+set viewoptions-=options
 
 "Color Scheme
 let g:gardener_light_comments=1
@@ -113,6 +119,13 @@ else
 		colorscheme default
 	endif
 endif
+
+filetype plugin on
+filetype plugin indent on
+autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
+autocmd! BufWritePost * Neomake
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent! loadview
 "}}}
 
 "{{{ Plugin configurations
@@ -122,6 +135,19 @@ let g:AutoPairsMapCR = 0
 
 "{{{ deoplete.vim
 let g:deoplete#enable_at_startup = 1
+
+let g:deoplete#enable_smart_case = 1
+
+let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/3.8.0/include'
+
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+let g:deoplete#omni#input_patterns.d = [
+	\'\.\w*',
+	\'\w*\('
+\]
+
+let g:deoplete#omni#functions = get(g:,'deoplete#omni#functions',{})
 "}}}
 
 "{{{ dutyl
@@ -161,18 +187,42 @@ let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
 let g:tex_flavor='latex'
 "}}}
+"{{{ Neomake
+let g:neomake_c_gccw_maker = {
+   \ 'exe': $HOME."/.config/nvim/cdb_wrapper",
+   \ 'args': ['gcc', '-fsyntax-only', '-Wall', '-Wextra'],
+   \ 'errorformat':
+      \ '%-G%f:%s:,' .
+      \ '%f:%l:%c: %trror: %m,' .
+      \ '%f:%l:%c: %tarning: %m,' .
+      \ '%f:%l:%c: %m,'.
+      \ '%f:%l: %trror: %m,'.
+      \ '%f:%l: %tarning: %m,'.
+      \ '%f:%l: %m',
+\ }
+let g:neomake_c_clangw_maker = {
+   \ 'exe': $HOME."/.config/nvim/cdb_wrapper",
+   \ 'args': ['clangw', '-fsyntax-only', '-Wall', '-Wextra'],
+   \ 'errorformat':
+      \ '%-G%f:%s:,' .
+      \ '%f:%l:%c: %trror: %m,' .
+      \ '%f:%l:%c: %tarning: %m,' .
+      \ '%f:%l:%c: %m,'.
+      \ '%f:%l: %trror: %m,'.
+      \ '%f:%l: %tarning: %m,'.
+      \ '%f:%l: %m',
+\ }
+let g:neomake_c_enabled_makers = ['clangw', 'gccw']
+"}}}
 "}}}
 
 "{{{ FileType configurations
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set nosmartindent
-"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-"autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1  " Rails support
 autocmd FileType java setlocal noexpandtab " do not expand tabs to spaces for Java
@@ -191,7 +241,7 @@ noremap  <buffer> <silent> <Up>   gk
 noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> <Home> g<Home>
 noremap  <buffer> <silent> <End>  g<End>
-nnoremap ; :
+nnoremap <space> :
 
 cnoreabbrev Man Snman
 "}}}
