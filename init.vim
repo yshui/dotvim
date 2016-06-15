@@ -1,12 +1,20 @@
-function! UPDATE_TAGS()
+"{{{ Utility functions
+function! UPDATE_TAGS() "{{{
 	let _f_=expand("%:p")
 	let _cmd_='ctags -a -f ./tags --fields=+lKiSz --c-kinds=cdefgmnpstuvx --c++-kinds=cdefgmnpstuvx --extra=+q  ' . '"' . _f_ . '"'
 	let _resp=system(_cmd_)
 	unlet _cmd_
 	unlet _f_
 	unlet _resp
-endfunction
+endfunction "}}}
 
+function! s:is_whitespace() "{{{
+	let col = col('.') - 1
+	return ! col || getline('.')[col - 1] =~? '\s'
+endfunction "}}}
+"}}}
+
+"{{{ Dein.vim plugins
 set runtimepath^=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim/
 
 call dein#begin(expand('~/.config/nvim/dein/'))
@@ -15,7 +23,6 @@ call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('othree/html5.vim')
-call dein#add('alvan/vim-closetag')
 call dein#add('tpope/vim-surround')
 call dein#add('chrisbra/SudoEdit.vim')
 call dein#add('pangloss/vim-javascript')
@@ -43,20 +50,21 @@ call dein#end()
 if dein#check_install()
   call dein#install()
 endif
+"}}}
 
 filetype plugin on
 filetype plugin indent on
 autocmd BufWritePost *.cpp,*.h,*.c,*.py,*.js,*.cl call UPDATE_TAGS()
 autocmd BufWritePost *.py Neomake
+
+source $VIMRUNTIME/menu.vim
+
+"{{{ Basic vim configurations
+"Return to the last edit position
 autocmd BufReadPost *
   \ if line("'\"") > 1 && line("'\"") <= line("$") |
   \   exe "normal! g`\"" |
   \ endif
-
-"autocmd BufRead,BufNewFile *.md set spell spelllang=en_us
-
-source $VIMRUNTIME/menu.vim
-
 set mouse=a
 syntax enable
 
@@ -86,51 +94,15 @@ set shada=!,'150,<100,/50,:50,r/tmp,s256
 "au FileType c,cpp,vim let w:mcc=matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
-
-let g:deoplete#enable_at_startup = 1
-
-let g:dutyl_neverAddClosingParen=1
-let g:dutyl_stdImportPaths=['/usr/include/dlang/dmd']
-
-let g:airline_powerline_fonts = 1
-let g:airline_theme = "wombat"
-
-let g:neomake_error_sign = {
-    \ 'text': 'E>',
-    \ 'texthl': 'YcmErrorSection',
-    \ }
-let g:neomake_warning_sign = {
-    \ 'text': 'W>',
-    \ 'texthl': 'YcmWarningSection',
-    \ }
-let delimitMate_expand_cr = 1
-
-let g:sudoAuth = "sudo"
-let g:sudo_no_gui = 1
-
-let g:lucius_use_bold=1
-
-let g:ycm_global_ycm_extra_conf = "~/.ycm.py"
-
-let g:syntastic_always_populate_loc_list=1
-
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
-
-
 set ofu=syntaxcomplete#Complete
+"List Char
+set list!
+set listchars=tab:>-,trail:-,extends:>
 
-let g:miniBufExplMapCTabSwitchBufs=0
-
-let g:tex_flavor='latex'
-
-let g:session_autosave = 'no'
-
-let g:syntastic_python_python_exec = '/usr/bin/python'
-"let g:syntastic_python_checkers=['python', 'py3kwarn']
-
+"Color Scheme
 let g:gardener_light_comments=1
 let g:gardener_blank=1
+let g:lucius_use_bold=1
 set background=dark
 if v:progname =~? "gvim"
 	colors lucius
@@ -141,17 +113,57 @@ else
 		colorscheme default
 	endif
 endif
+"}}}
 
-nmap F :call Mydict()<CR>
+"{{{ Plugin configurations
+"{{{ AutoPairs
+let g:AutoPairsMapCR = 0
+"}}}
 
+"{{{ deoplete.vim
+let g:deoplete#enable_at_startup = 1
+"}}}
 
-map <silent> <C-N> :let @/=""<CR>
-map <F2> :!/usr/bin/ctags -R --fields=+lKiSz --c-kinds=+cdefgmnpstuvx --c++-kinds=+cdefgmnpstuvx --extra=+q .<CR>
-nnoremap <F7> "+p
-nmap <C-\> :!dict "<cword>" <C-R>=expand("<cword>")<CR><CR>
-imap <C-\> <C-o>:!dict "<cword>" <C-R>=expand("<cword>")<CR><CR>
+"{{{ dutyl
+let g:dutyl_neverAddClosingParen=1
+let g:dutyl_stdImportPaths=['/usr/include/dlang/dmd']
+"}}}
 
-" Turn on omni-completion for the appropriate file types.
+"{{{ airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "wombat"
+"}}}
+
+"{{{ neomake
+let g:neomake_error_sign = {
+    \ 'text': 'E>',
+    \ 'texthl': 'YcmErrorSection',
+    \ }
+let g:neomake_warning_sign = {
+    \ 'text': 'W>',
+    \ 'texthl': 'YcmWarningSection',
+    \ }
+"}}}
+
+"{{{ SudoEdit
+let g:sudoAuth = "sudo"
+let g:sudo_no_gui = 1
+"}}}
+
+"{{{ syntastic
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_python_python_exec = '/usr/bin/python'
+"let g:syntastic_python_checkers=['python', 'py3kwarn']
+"}}}
+
+"{{{ LaTeX
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
+let g:tex_flavor='latex'
+"}}}
+"}}}
+
+"{{{ FileType configurations
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set nosmartindent
@@ -165,63 +177,52 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1  " Rails support
 autocmd FileType java setlocal noexpandtab " do not expand tabs to spaces for Java
 autocmd FileType rust setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
-au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
+autocmd FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
+autocmd FileType markdown set spell spelllang=en_us
+"}}}
+
+"{{{ Misc mappings
+map <silent> <C-N> :let @/=""<CR>
+map <F2> :!/usr/bin/ctags -R --fields=+lKiSz --c-kinds=+cdefgmnpstuvx --c++-kinds=+cdefgmnpstuvx --extra=+q .<CR>
 imap <C-n> <esc>nli
 
-runtime ftplugin/man.vim
 nnoremap <silent> <F8> :TlistToggle<CR>
 noremap  <buffer> <silent> <Up>   gk
 noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> <Home> g<Home>
 noremap  <buffer> <silent> <End>  g<End>
+nnoremap ; :
+
+cnoreabbrev Man Snman
+"}}}
 
 "inoremap <expr><C-g>     neocomplcache#undo_completion()
 "inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"function! s:my_cr_function()
-  "return neocomplcache#smart_close_popup() . "\<CR>"
-  "" For no inserting <CR> key.
-  ""return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-"endfunction
-
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><C-y>  neocomplcache#close_popup()
-"inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-"if !exists('g:neocomplcache_omni_patterns')
-  "let g:neocomplcache_omni_patterns = {}
-"endif
-"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-"if !exists('g:neocomplcache_keyword_patterns')
-    "let g:neocomplcache_keyword_patterns = {}
-"endif
-"let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-"inoremap <expr><CR>  neocomplcache#smart_close_popup()
-" <TAB>: completion.
-" <C-h>, <BS>: close popup and delete backword char.
-
 inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
 
-" Expand snippets on tab if snippets exists, otherwise do autocompletion
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\ : pumvisible() ? "\<C-n>" : "\<TAB>"
-" If popup window is visible do autocompletion from back
-imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Fix for jumping over placeholders for neosnippet
+
+"{{{ deoplete.vim related mappings
+imap <expr><CR>  pumvisible() ?
+\ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#mappings#close_popup()."\<CR>") :
+\ "\<CR>\<Plug>AutoPairsReturn"
+
+inoremap <expr><C-h>
+\ deoplete#mappings#smart_close_popup()."\<C-h>"
+
+inoremap <expr><BS>
+\ deoplete#mappings#smart_close_popup()."\<C-h>"
+
+imap <expr><TAB> pumvisible() ? "\<C-n>" :
+\ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" :
+\ <SID>is_whitespace() ? "\<TAB>" : deoplete#mappings#manual_complete()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 smap <expr><TAB> neosnippet#jumpable() ?
 \ "\<Plug>(neosnippet_jump)"
 \: "\<TAB>"
+"}}}
 
 "List Char
 set list!
@@ -236,3 +237,4 @@ nnoremap pc :YcmCompleter GoToDeclaration
 nnoremap ; :
 
 cnoreabbrev Man Snman
+" vim: foldmethod=marker
