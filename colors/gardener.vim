@@ -176,95 +176,96 @@ else
 " Colors for the User Interface.
 
     if exists("g:gardener_setnum")
-        exec "hi linenr     cterm=BOLD   ctermfg=235   ctermbg=244"
+        hi linenr     cterm=BOLD   ctermfg=235   ctermbg=244
     else
-        exec "hi linenr     cterm=BOLD   ctermfg=244   ctermbg=235"
+        hi linenr     cterm=BOLD   ctermfg=244   ctermbg=235
     endif
 
 
-    exec "hi Cursor         cterm=BOLD   ctermfg=255   ctermbg=167"
-    exec "hi CursorIM       cterm=BOLD   ctermfg=255   ctermbg=167"
+    hi Cursor         cterm=BOLD   ctermfg=255   ctermbg=167
+    hi CursorIM       cterm=BOLD   ctermfg=255   ctermbg=167
 
-    exec "hi Normal         cterm=NONE   ctermfg=white   ctermbg=none"
-    exec "hi NonText        cterm=NONE   ctermfg=230   ctermbg=none"
-    exec "hi Visual         cterm=NONE   ctermfg=255   ctermbg=68"
+    hi Normal         cterm=NONE   ctermfg=white   ctermbg=none
+    hi NonText        cterm=NONE   ctermfg=230   ctermbg=none
+    hi Visual         cterm=NONE   ctermfg=255   ctermbg=68
 
-    exec "hi Linear         cterm=NONE   ctermfg=248   ctermbg=NONE"
+    hi Linear         cterm=NONE   ctermfg=248   ctermbg=NONE
 
-    exec "hi Directory      cterm=NONE   ctermfg=222    ctermbg=NONE"
+    hi Directory      cterm=NONE   ctermfg=222    ctermbg=NONE
 
-    exec "hi IncSearch      cterm=NONE   ctermfg=255   ctermbg=25"
+    hi IncSearch      cterm=NONE   ctermfg=255   ctermbg=25
 
-    exec "hi ErrorMsg       cterm=BOLD   ctermfg=196   ctermbg=NONE"
-    exec "hi WarningMsg     cterm=BOLD   ctermfg=196   ctermbg=NONE"
-    exec "hi ModeMsg        cterm=NONE   ctermfg=230   ctermbg=NONE"
-    exec "hi MoreMsg        cterm=NONE   ctermfg=230   ctermbg=NONE"
-    exec "hi Question       cterm=NONE   ctermfg=194   ctermbg=NONE"
+    hi ErrorMsg       cterm=BOLD   ctermfg=196   ctermbg=NONE
+    hi WarningMsg     cterm=BOLD   ctermfg=196   ctermbg=NONE
+    hi ModeMsg        cterm=NONE   ctermfg=230   ctermbg=NONE
+    hi MoreMsg        cterm=NONE   ctermfg=230   ctermbg=NONE
+    hi Question       cterm=NONE   ctermfg=194   ctermbg=NONE
 
-    exec "hi StatusLineNC   cterm=NONE   ctermfg=16    ctermbg=229"
-    exec "hi StatusLine     cterm=BOLD   ctermfg=255   ctermbg=167"
-    exec "hi VertSplit      cterm=NONE   ctermfg=16    ctermbg=229"
+    hi StatusLineNC   cterm=NONE   ctermfg=16    ctermbg=229
+    hi StatusLine     cterm=BOLD   ctermfg=255   ctermbg=167
+    hi VertSplit      cterm=NONE   ctermfg=16    ctermbg=229
 
-    exec "hi DiffAdd        cterm=NONE   ctermfg=255   ctermbg=60"
-    exec "hi DiffChange        cterm=NONE   ctermfg=255   ctermbg=none"
-    exec "hi DiffDelete        cterm=NONE   ctermfg=255   ctermbg=95"
-    exec "hi DiffText        cterm=BOLD   ctermfg=255   ctermbg=95"
+    hi DiffAdd        cterm=NONE   ctermfg=255   ctermbg=60
+    hi DiffChange        cterm=NONE   ctermfg=255   ctermbg=none
+    hi DiffDelete        cterm=NONE   ctermfg=255   ctermbg=95
+    hi DiffText        cterm=BOLD   ctermfg=255   ctermbg=95
 
     " Colors for Syntax Highlighting.
     if exists("g:gardener_light_comments")
-        exec "hi Comment        cterm=NONE   ctermfg=253   ctermbg=60"
+        hi Comment        cterm=NONE   ctermfg=253   ctermbg=60
     else
-        exec "hi Comment        cterm=NONE   ctermfg=244   ctermbg=NONE"
+        hi Comment        cterm=NONE   ctermfg=244   ctermbg=NONE
     endif
 
-    exec "hi Constant       cterm=BOLD   ctermfg=255  ctermbg=NONE"
-    exec "hi String         cterm=NONE   ctermfg=230  ctermbg=0x202020"
-    exec "hi Character      cterm=BOLD   ctermfg=230  ctermbg=NONE"
-    exec "hi Number         cterm=BOLD   ctermfg=153  ctermbg=NONE"
-    exec "hi Boolean        cterm=NONE   ctermfg=207  ctermbg=NONE"
-    exec "hi Float          cterm=BOLD   ctermfg=153  ctermbg=NONE"
+    hi Constant       cterm=BOLD   ctermfg=255  ctermbg=NONE
+    hi String         cterm=NONE   ctermfg=230  ctermbg=0x202020
+    hi Character      cterm=BOLD   ctermfg=230  ctermbg=NONE
+    hi Number         cterm=BOLD   ctermfg=153  ctermbg=NONE
+    hi Boolean        cterm=NONE   ctermfg=207  ctermbg=NONE
+    hi Float          cterm=BOLD   ctermfg=153  ctermbg=NONE
 
-    exec "hi Identifier     cterm=NONE   ctermfg=223  ctermbg=NONE"
-    exec "hi Function       cterm=BOLD   ctermfg=229  ctermbg=NONE"
-    exec "hi Statement      cterm=BOLD   ctermfg=230  ctermbg=NONE"
+    hi Identifier     cterm=NONE   ctermfg=223  ctermbg=NONE
+    hi Function       cterm=BOLD   ctermfg=229  ctermbg=NONE
+    hi Statement      cterm=BOLD   ctermfg=230  ctermbg=NONE
 
-    exec "hi Define         cterm=BOLD   ctermfg=147  ctermbg=NONE"
-    exec "hi Conditional    cterm=BOLD   ctermfg=149  ctermbg=NONE"
+    hi Define         cterm=BOLD   ctermfg=147  ctermbg=NONE
+    hi Conditional    cterm=BOLD   ctermfg=149  ctermbg=NONE
 
-    exec "hi Repeat         cterm=BOLD   ctermfg=208  ctermbg=NONE"
-    exec "hi Label          cterm=BOLD   ctermfg=225  ctermbg=NONE"
-    exec "hi Operator       cterm=BOLD   ctermfg=173  ctermbg=NONE"
-    exec "hi Keyword        cterm=BOLD   ctermfg=86   ctermbg=NONE"
-    exec "hi Exception      cterm=BOLD   ctermfg=86   ctermbg=NONE"
+    hi Repeat         cterm=BOLD   ctermfg=208  ctermbg=NONE
+    hi Label          cterm=BOLD   ctermfg=225  ctermbg=NONE
+    hi Operator       cterm=BOLD   ctermfg=173  ctermbg=NONE
+    hi Keyword        cterm=BOLD   ctermfg=86   ctermbg=NONE
+    hi Exception      cterm=BOLD   ctermfg=86   ctermbg=NONE
 
-    exec "hi PreProc        cterm=BOLD   ctermfg=222   ctermbg=NONE"
-    exec "hi Include        cterm=BOLD   ctermfg=114   ctermbg=NONE"
-    exec "hi Macro          cterm=BOLD   ctermfg=114   ctermbg=NONE"
-    exec "hi PreCondit      cterm=BOLD   ctermfg=114   ctermbg=NONE"
+    hi PreProc        cterm=BOLD   ctermfg=222   ctermbg=NONE
+    hi Include        cterm=BOLD   ctermfg=114   ctermbg=NONE
+    hi Macro          cterm=BOLD   ctermfg=114   ctermbg=NONE
+    hi PreCondit      cterm=BOLD   ctermfg=114   ctermbg=NONE
 
-    exec "hi Type           cterm=BOLD   ctermfg=193   ctermbg=NONE"
-    exec "hi StorageClass   cterm=BOLD   ctermfg=78    ctermbg=NONE"
-    exec "hi Structure      cterm=BOLD   ctermfg=114   ctermbg=NONE"
-    exec "hi Typedef        cterm=BOLD   ctermfg=114   ctermbg=NONE"
+    hi Type           cterm=BOLD   ctermfg=193   ctermbg=NONE
+    hi StorageClass   cterm=BOLD   ctermfg=78    ctermbg=NONE
+    hi Structure      cterm=BOLD   ctermfg=114   ctermbg=NONE
+    hi Typedef        cterm=BOLD   ctermfg=114   ctermbg=NONE
 
-    exec "hi Special        cterm=BOLD   ctermfg=153   ctermbg=NONE"
-    exec "hi SpecialChar    cterm=BOLD   ctermfg=153   ctermbg=NONE"
-    exec "hi Tag            cterm=BOLD   ctermfg=153   ctermbg=NONE"
-    exec "hi Delimiter      cterm=BOLD   ctermfg=255   ctermbg=NONE"
-    exec "hi SpecialComment cterm=BOLD   ctermfg=253   ctermbg=24"
-    exec "hi Debug          cterm=NONE   ctermfg=210   ctermbg=NONE"
+    hi Special        cterm=BOLD   ctermfg=153   ctermbg=NONE
+    hi SpecialChar    cterm=BOLD   ctermfg=153   ctermbg=NONE
+    hi Tag            cterm=BOLD   ctermfg=153   ctermbg=NONE
+    hi Delimiter      cterm=BOLD   ctermfg=255   ctermbg=NONE
+    hi SpecialComment cterm=BOLD   ctermfg=253   ctermbg=24
+    hi Debug          cterm=NONE   ctermfg=210   ctermbg=NONE
 
-    exec "hi Title          cterm=BOLD   ctermfg=255   ctermbg=60"
-    exec "hi Ignore         cterm=NONE   ctermfg=251   ctermbg=NONE"
-    exec "hi Error          cterm=NONE   ctermfg=255   ctermbg=196"
-    exec "hi Ignore         cterm=NONE   ctermfg=196   ctermbg=60"
+    hi Title          cterm=BOLD   ctermfg=255   ctermbg=60
+    hi Ignore         cterm=NONE   ctermfg=251   ctermbg=NONE
+    hi Error          cterm=NONE   ctermfg=255   ctermbg=196
+    hi Ignore         cterm=NONE   ctermfg=196   ctermbg=60
 
-    exec "hi htmlH1         cterm=BOLD   ctermfg=255   ctermbg=NONE"
-    exec "hi htmlH2         cterm=BOLD   ctermfg=253   ctermbg=NONE"
-    exec "hi htmlH3         cterm=BOLD   ctermfg=251   ctermbg=NONE"
-    exec "hi htmlH4         cterm=BOLD   ctermfg=249   ctermbg=NONE"
-    exec "hi htmlH5         cterm=BOLD   ctermfg=247   ctermbg=NONE"
-    exec "hi htmlH6         cterm=BOLD   ctermfg=245   ctermbg=NONE"
+    hi htmlH1         cterm=BOLD   ctermfg=255   ctermbg=NONE
+    hi htmlH2         cterm=BOLD   ctermfg=253   ctermbg=NONE
+    hi htmlH3         cterm=BOLD   ctermfg=251   ctermbg=NONE
+    hi htmlH4         cterm=BOLD   ctermfg=249   ctermbg=NONE
+    hi htmlH5         cterm=BOLD   ctermfg=247   ctermbg=NONE
+    hi htmlH6         cterm=BOLD   ctermfg=245   ctermbg=NONE
+
 
 endif
 " And finally.
@@ -275,3 +276,5 @@ autocmd FileType c,cpp,javascript highlight ExtraWhitespace ctermbg=red guibg=re
 autocmd FileType c,cpp,javascript match ExtraWhitespace /\s\+$/
 hi ColorColumn ctermbg=red
 
+hi Variable    cterm=BOLD   ctermfg=210 ctermbg=NONE guifg=White guibg=NONE
+hi Member      ctermfg=117 ctermbg=NONE guifg=#005f00
