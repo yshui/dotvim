@@ -65,8 +65,9 @@ call dein#add('kana/vim-arpeggio')
 call dein#add('editorconfig/editorconfig-vim')
 call dein#add('arakashic/chromatica.nvim', {'merged': 0})
 "call dein#add('mhartington/nvim-typescript', {'depends' : ['deoplete.nvim']})
-call dein#add('autozimu/LanguageClient-neovim', {'rev': 'master'})
+call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'make release'})
 call dein#add('yshui/tooltip.nvim')
+call dein#add('udalov/kotlin-vim')
 
 call dein#end()
 "call maktaba#plugin#Detect()
@@ -178,7 +179,7 @@ set shada=!,'150,<100,/50,:50,r/tmp,s256
 set smartindent
 set ofu=syntaxcomplete#Complete
 "List Char
-set list!
+"set list!
 set listchars=tab:>-,trail:-,extends:>
 set viewoptions-=options
 
@@ -240,8 +241,9 @@ autocmd VimEnter * call s:chords_setup()
 "}}}
 "{{{ LanguageClient
 let g:LanguageClient_serverCommands = {
-    \ 'c': [$HOME.'/programs/cquery/build/release/bin/cquery', '--language-server', '--log-file', '/tmp/a'],
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'c': ['cquery', '--language-server', '--log-file', '/tmp/a'],
+    \ 'cpp': ['cquery', '--language-server', '--log-file', '/tmp/a'],
+    \ 'rust': ['rls'],
     \ 'typescript': [$HOME.'/node_modules/.bin/typescript-language-server', '--stdio'],
 \ }
 let g:LanguageClient_autoStart = 1
@@ -343,6 +345,7 @@ let g:neomake_c_clangw_maker = {
       \ '%f:%l: %m',
 \ }
 let g:neomake_c_enabled_makers = []
+let g:neomake_cpp_enabled_makers = []
 let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 "}}}
 "{{{ emmet
@@ -374,6 +377,7 @@ autocmd FileType rust setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab
 autocmd FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 autocmd FileType markdown set spell spelllang=en_us
 autocmd FileType lua set expandtab shiftwidth=4 tabstop=8 softtabstop=4 textwidth=80
+autocmd BufNewFile,BufRead *.mi set filetype=mite
 au BufNewFile,BufRead meson.build set filetype=meson
 au BufNewFile,BufRead meson_options.txt set filetype=meson
 "}}}
@@ -396,7 +400,7 @@ function s:lc_hover()
 		call ShowTooltip(screenrow(), screencol(), r["contents"][0]["value"])
 	endif
 endfunc
-autocmd CursorHold *.c call s:lc_hover()
+"autocmd CursorHold *.c call s:lc_hover()
 autocmd CursorMoved *.c call HideTooltip()
 noremap <silent><c-t> :call <SID>lc_hover()<CR>
 
@@ -437,12 +441,6 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 "List Char
 set list!
 set listchars=tab:>-,trail:-,extends:>
-
-nnoremap y :YcmDiags
-nnoremap pg :YcmCompleter GoToDefinitionElseDeclaration
-nnoremap pd :YcmCompleter GoToDefinition
-nnoremap pc :YcmCompleter GoToDeclaration
-
 
 nnoremap ; :
 
