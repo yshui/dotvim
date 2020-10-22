@@ -125,6 +125,7 @@ endfunc
 "Experimenting with long press key map
 let g:press_timer = -1
 let g:repeat_count = -1
+"let g:fzf_layout = { 'window': 'call Open_float()' }
 
 func! s:long_press_j_cancel()
 	echomsg "canceled"
@@ -162,23 +163,29 @@ endfunc
 
 "}}}
 
-
 source $VIMRUNTIME/menu.vim
 
 "{{{ Basic vim configurations
 
 "Set tmux window name and title
-autocmd BufEnter * call system("tmux rename-window \"nvim: ".expand("%:t")."\"")
+autocmd VimEnter * call s:tmux_apply_title()
+autocmd BufEnter * call s:tmux_apply_title()
+autocmd VimResume * call s:tmux_apply_title()
+autocmd VimLeave * call s:tmux_reset_title()
+autocmd VimSuspend * call s:tmux_reset_title()
 set title
+set titlestring=%f\ -\ NVIM
 
+set guifont=Iosevka:h12
 "Return to the last edit position
 autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \ if line("'\"") > 1 && line("'\"") <= line("$") && expand("%:t") != "COMMIT_EDITMSG" |
   \   exe "normal! g`\"" |
   \ endif
 set mouse=a
 syntax enable
 
+set noshowmode
 set hlsearch
 set backup
 set backupdir=$HOME/.vimf/backup,.
@@ -197,9 +204,11 @@ set cpo-=<
 set wcm=<C-Z>
 set laststatus=2
 set clipboard=unnamedplus
+set secure
+set nomodeline
 map <F4> :emenu <C-Z>
 au BufRead,BufNewFile * let b:start_time=localtime()
-set completeopt=menu,menuone,preview
+set completeopt=menuone
 set shada=!,'150,<100,/50,:50,r/tmp,s256
 "au FileType c,cpp,vim let w:mcc=matchadd('ColorColumn', '\%81v', 100)
 
@@ -215,7 +224,7 @@ set background=dark
 if v:progname =~? "gvim"
 	colors lucius
 else
-	colorscheme gardener
+	colorscheme monokai
 endif
 
 let g:nvim_config_dir = $HOME."/.config/nvim"
@@ -246,6 +255,17 @@ let g:chromatica#libclang_path = g:__clang_path
 let g:chromatica#highlight_feature_level = 0
 let g:chromatica#responsive_mode = 1
 let g:chromatica#enable_at_startup = 1
+"}}}
+"{{{EditorConfig
+let g:EditorConfig_preserve_formatoptions=1
+"}}}
+"{{{Parinfer
+"Disable Parinfer filetype commands by default
+let g:vim_parinfer_filetypes = []
+let g:vim_parinfer_globs = [ "*.el", "*.lisp", "*.scm" ]
+"}}}
+"{{{
+let g:coc_global_extensions = [ "coc-rust-analyzer", "coc-lists", "coc-json", "coc-tsserver", "coc-syntax", "coc-snippets", "coc-clangd" ]
 "}}}
 "{{{ Arpeggio
 tnoremap <leader><ESC> <C-\><C-n>
@@ -282,43 +302,12 @@ endfunction
 
 autocmd VimEnter * call s:chords_setup()
 "}}}
-"{{{ LanguageClient
-let g:LanguageClient_serverCommands = {
-    \ 'c': ['cquery', '--language-server', '--log-file', '/tmp/a'],
-    \ 'cpp': ['cquery', '--language-server', '--log-file', '/tmp/a'],
-    \ 'rust': ['rls'],
-    \ 'typescript': [$HOME.'/node_modules/.bin/typescript-language-server', '--stdio'],
-\ }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_settingsPath = g:nvim_config_dir.'/settings.json'
-let g:LanguageClient_loadSettings = 1
-"}}}
 
 "{{{ AutoPairs/delimitMate
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr = 1
 let delimitMate_jump_expansion = 1
 let g:AutoPairsMapCR = 0
-"}}}
-
-"{{{ deoplete.vim
-let g:deoplete#enable_at_startup = 1
-
-let g:deoplete#enable_smart_case = 1
-
-let g:clang2_placeholder_prev = '<s-c-k>'
-let g:clang2_placeholder_next = '<c-k>'
-
-"let g:deoplete#sources#d#dcd_client_binary = "dcd-client"
-"let g:deoplete#sources#d#dcd_server_binary = "dcd-server"
-
-let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
-let g:deoplete#omni#input_patterns.d = [
-	\'\.\w*',
-	\'\w*\('
-\]
-
-let g:deoplete#omni#functions = get(g:,'deoplete#omni#functions',{})
 "}}}
 
 "{{{ airline
@@ -343,7 +332,7 @@ let g:neomake_warning_sign = {
 
 "{{{ SudoEdit
 let g:sudoAuth = "sudo"
-let g:sudo_no_gui = 1
+let g:sudo_no_gui = 0
 "}}}
 
 "{{{ syntastic
