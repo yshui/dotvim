@@ -122,15 +122,6 @@ func! s:idle_callback(timer)
 	Neomake
 endfunc
 
-func! s:input_callback()
-	if g:idle_timer >= 0
-		call timer_stop(g:idle_timer)
-	endif
-	let g:idle_timer = timer_start(5000, function('s:idle_callback'), {'repeat': 1})
-endfunc
-
-autocmd InsertCharPre * call s:input_callback()
-
 "Experimenting with long press key map
 let g:press_timer = -1
 let g:repeat_count = -1
@@ -220,9 +211,6 @@ set listchars=tab:>-,trail:-,extends:>
 set viewoptions-=options
 
 "Color Scheme
-let g:gardener_light_comments=1
-let g:gardener_blank=1
-let g:lucius_use_bold=1
 set background=dark
 if v:progname =~? "gvim"
 	colors lucius
