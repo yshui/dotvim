@@ -17,11 +17,32 @@ function! s:dein_clear_unused() "{{{
 	return map(dein#check_clean(), "delete(v:val, 'rf')")
 endfunction "}}}
 
+function! s:tmux_apply_title() "{{{
+	call system("tmux rename-window \"nvim: ".expand("%:t")."\"")
+endfunc "}}}
+
+function! s:tmux_reset_title() "{{{
+	call system("tmux set-window-option automatic-rename on")
+endfunc "}}}
+
+function! Open_float()
+	if exists('*nvim_open_win')
+		let b = nvim_create_buf(v:false, v:true)
+		call nvim_buf_set_option(b, "buftype", "nofile")
+		let opts = {'row':10, 'col':110, 'anchor': 'NE', 'relative': 'win', 'height': 20, 'width': 60}
+		let w =  nvim_open_win(b, v:true, opts)
+		hi Floating guibg=#000000
+		call setwinvar(w, '&winhl', 'Normal:Floating')
+		call setwinvar(w, '&number', 0)
+	endif
+endfunction
+
 command DeinClear call s:dein_clear_unused()
 "}}}
 
 "{{{ Dein.vim plugins
 set runtimepath^=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim/
+let g:dein#install_process_timeout=99999
 
 call dein#begin(expand('~/.config/nvim/dein/'))
 
