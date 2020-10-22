@@ -248,17 +248,36 @@ let g:chromatica#responsive_mode = 1
 let g:chromatica#enable_at_startup = 1
 "}}}
 "{{{ Arpeggio
+tnoremap <leader><ESC> <C-\><C-n>
+tnoremap <leader>vst <C-\><C-n>:vsplit \| term<CR>
 function! s:chords_setup()
 	Arpeggio inoremap ji <ESC>
 	Arpeggio inoremap jk <C-\><C-O>:close<CR>
 	Arpeggio inoremap wq <C-\><C-O>:wq<CR>
 	Arpeggio inoremap fq <C-\><C-O>:q!<CR>
 	Arpeggio inoremap wr <C-\><C-O>:w<CR>
+	Arpeggio inoremap har <C-\><C-O>:call CocActionAsync("doHover")<CR>
+	Arpeggio imap af <C-\><C-O><Plug>(coc-fix-current)
+	Arpeggio nmap ac0 v<Plug>(coc-codeaction-selected)
+	Arpeggio imap ac0 <C-\><C-O>v<Plug>(coc-codeaction-selected)
+
+	Arpeggio imap eo0 <C-\><C-O><Plug>(coc-diagnostic-prev)
+	Arpeggio imap ei0 <C-\><C-O><Plug>(coc-diagnostic-next)
+	Arpeggio nmap eo0 <Plug>(coc-diagnostic-prev)
+	Arpeggio nmap ei0 <Plug>(coc-diagnostic-next)
 
 	Arpeggio noremap jk :close<CR>
 	Arpeggio noremap wq :wq<CR>
 	Arpeggio noremap fq :q!<CR>
 	Arpeggio noremap wr :w<CR>
+	Arpeggio noremap har :call CocActionAsync("doHover")<CR>
+	Arpeggio nmap gd <Plug>(coc-definition)
+	Arpeggio nmap ref <Plug>(coc-references)
+	Arpeggio nmap fm <Plug>(coc-format-selected)
+	Arpeggio xmap fm <Plug>(coc-format-selected)
+	Arpeggio nmap af <Plug>(coc-fix-current)
+	Arpeggio nmap rn <Plug>(coc-rename)
+	"Arpeggio imap ag <Plug>(ncm2_expand_longest)
 endfunction
 
 autocmd VimEnter * call s:chords_setup()
@@ -418,44 +437,38 @@ noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> <Home> g<Home>
 noremap  <buffer> <silent> <End>  g<End>
 nnoremap <space> :
-function s:lc_hover()
-	let r = LanguageClient_textDocument_hoverSync()
-	if type(r) != 7
-		call ShowTooltip(screenrow(), screencol(), r["contents"][0]["value"])
-	endif
-endfunc
+inoremap <C-p> <C-\><C-O>:Files<CR>
+nnoremap <C-p> :Files<CR>
 "autocmd CursorHold *.c call s:lc_hover()
-autocmd CursorMoved *.c call HideTooltip()
-noremap <silent><c-t> :call <SID>lc_hover()<CR>
-
-cnoreabbrev Man Snman
-"}}}
+"autocmd CursorMoved *.c call HideTooltip()
+"noremap <silent><c-t> :call <SID>lc_hover()<CR>
 
 inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
+"vmap <LeftRelease> "*ygv
+"}}}
 
+"{{{ ncm2 mappings
 
-"{{{ deoplete.vim related mappings
-imap <expr><CR>  pumvisible() ?
-\ (neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : deoplete#mappings#close_popup()."\<Plug>(neosnippet_jump)") :
-\ "\<CR>\<Plug>AutoPairsReturn"
+"imap <c-k> <Plug>(ncm2_expand_longest)
 
-inoremap <expr><C-h>
-\ deoplete#mappings#smart_close_popup()."\<C-h>"
+"inoremap <expr> <Plug>(ncm2_expand_longest) Ncm2ExpandLongest()
+"}}}
 
-inoremap <expr><BS>
-\ deoplete#mappings#smart_close_popup()."\<C-h>"
+"{{{ completion related mappings
+imap <expr><CR>  "\<CR>\<Plug>AutoPairsReturn"
 
-imap <expr><TAB> pumvisible() ? "\<C-n>" :
-\ neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)" :
-\ <SID>is_whitespace() ? "\<TAB>" : deoplete#mappings#manual_complete()
+"inoremap <expr><C-h>
+"\ deoplete#mappings#smart_close_popup()."\<C-h>"
+
+"inoremap <expr><BS>
+"\ deoplete#mappings#smart_close_popup()."\<C-h>"
+
+imap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>is_whitespace() ? "\<TAB>" : coc#refresh()
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <F7> <C-\><C-O>:Neomake<CR>
 nnoremap <F7> :Neomake<CR>
 
-smap <expr><TAB> neosnippet#jumpable() ?
-\ "\<Plug>(neosnippet_jump)"
-\: "\<TAB>"
 "}}}
 "
 "{{{commands
@@ -468,5 +481,4 @@ set listchars=tab:>-,trail:-,extends:>
 
 nnoremap ; :
 
-cnoreabbrev Man Snman
 " vim: foldmethod=marker
