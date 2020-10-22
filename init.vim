@@ -73,7 +73,6 @@ call dein#add('jiangmiao/auto-pairs')
 call dein#add('rust-lang/rust.vim')
 "call dein#add('Raimondi/delimitMate')
 call dein#add('Matt-Deacalion/vim-systemd-syntax')
-call dein#add('neomake/neomake')
 call dein#add('leafgarland/typescript-vim')
 "call dein#add('nhooyr/neoman.vim')
 call dein#add('junegunn/fzf', {'merged':0})
@@ -319,17 +318,6 @@ let g:airline_theme = "wombat"
 let g:clang_format#detect_style_file = 1
 "}}}
 
-"{{{ neomake
-let g:neomake_error_sign = {
-    \ 'text': 'E>',
-    \ 'texthl': 'YcmErrorSection',
-    \ }
-let g:neomake_warning_sign = {
-    \ 'text': 'W>',
-    \ 'texthl': 'YcmWarningSection',
-    \ }
-"}}}
-
 "{{{ SudoEdit
 let g:sudoAuth = "sudo"
 let g:sudo_no_gui = 0
@@ -345,35 +333,6 @@ let g:syntastic_python_python_exec = '/usr/bin/python'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf='xelatex --shell-escape --interaction=nonstopmode $*'
 let g:tex_flavor='latex'
-"}}}
-"{{{ Neomake
-let g:neomake_c_gccw_maker = {
-   \ 'exe': $HOME."/.config/nvim/cdb_wrapper",
-   \ 'args': ['gcc', '-fsyntax-only', '-Wall', '-Wextra'],
-   \ 'errorformat':
-      \ '%-G%f:%s:,' .
-      \ '%f:%l:%c: %trror: %m,' .
-      \ '%f:%l:%c: %tarning: %m,' .
-      \ '%f:%l:%c: %m,'.
-      \ '%f:%l: %trror: %m,'.
-      \ '%f:%l: %tarning: %m,'.
-      \ '%f:%l: %m',
-\ }
-let g:neomake_c_clangw_maker = {
-   \ 'exe': $HOME."/.config/nvim/cdb_wrapper",
-   \ 'args': ['clang', '-fsyntax-only', '-Wall', '-Wextra'],
-   \ 'errorformat':
-      \ '%-G%f:%s:,' .
-      \ '%f:%l:%c: %trror: %m,' .
-      \ '%f:%l:%c: %tarning: %m,' .
-      \ '%f:%l:%c: %m,'.
-      \ '%f:%l: %trror: %m,'.
-      \ '%f:%l: %tarning: %m,'.
-      \ '%f:%l: %m',
-\ }
-let g:neomake_c_enabled_makers = []
-let g:neomake_cpp_enabled_makers = []
-let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 "}}}
 "{{{ emmet
 let g:user_emmet_install_global = 0
