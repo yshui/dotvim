@@ -321,11 +321,6 @@ let g:deoplete#omni#input_patterns.d = [
 let g:deoplete#omni#functions = get(g:,'deoplete#omni#functions',{})
 "}}}
 
-"{{{ dutyl
-let g:dutyl_neverAddClosingParen=1
-let g:dutyl_stdImportPaths=['/usr/include/dlang/dmd']
-"}}}
-
 "{{{ airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme = "wombat"
@@ -399,16 +394,10 @@ autocmd FileType html,css EmmetInstall
 
 "{{{ FileType configurations
 
-function! s:chords_c()
-	Arpeggio inoremap rf <C-\><C-O>:call rtags#FindRefs()<CR><ESC>
-	Arpeggio inoremap rj <C-\><C-O>:call rtags#JumpTo(g:V_SPLIT)<CR>
-	Arpeggio noremap rf :call rtags#FindRefs()<CR>
-	Arpeggio noremap rj :call rtags#JumpTo(g:V_SPLIT)<CR>
-endfunction
-
-autocmd FileType c,cpp call s:chords_c()
+autocmd Filetype c,cpp set comments^=:///
 autocmd FileType python set shiftwidth=4
 autocmd FileType python set nosmartindent
+autocmd FileType cpp set nosmartindent preserveindent
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
@@ -423,6 +412,7 @@ autocmd FileType lua set expandtab shiftwidth=4 tabstop=8 softtabstop=4 textwidt
 autocmd BufNewFile,BufRead *.mi set filetype=mite
 au BufNewFile,BufRead meson.build set filetype=meson
 au BufNewFile,BufRead meson_options.txt set filetype=meson
+
 "}}}
 
 "{{{ Misc mappings
