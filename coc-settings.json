@@ -1,0 +1,34 @@
+{
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+            "initializationOptions": {
+                "cache": {
+                    "directory": ".ccls-cache"
+                },
+                "highlight": { "lsRanges" : true }
+            },
+            "disableDiagnostics": true
+        },
+       "zls" : {
+           "command": "zls",
+           "filetypes": ["zig"]
+       },
+        "dls": {
+            "command": "dls",
+            "filetypes": ["d"],
+            "rootPatterns": ["dub.sdl", "dub.json"]
+        },
+        "ocaml": {
+            "command": "reason-language-server",
+            "filetypes": ["ocaml", "reason"],
+            "rootPatterns": [ "bsconfig.json" ]
+        }
+    },
+    "diagnostic.virtualText": true,
+    "rust-analyzer.serverPath": "~/.cargo/bin/rust-analyzer",
+    "clangd.semanticHighlighting":  true,
+    "clangd.arguments": [ "--header-insertion=never" ]
+}
