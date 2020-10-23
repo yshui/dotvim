@@ -76,7 +76,6 @@ call dein#add('Matt-Deacalion/vim-systemd-syntax')
 call dein#add('leafgarland/typescript-vim')
 "call dein#add('nhooyr/neoman.vim')
 call dein#add('junegunn/fzf', {'merged':0})
-call dein#add('junegunn/fzf.vim')
 call dein#add('reasonml-editor/vim-reason-plus')
 "call dein#add('kien/ctrlp.vim')
 call dein#add('vim-scripts/Lucius')
@@ -103,6 +102,8 @@ call dein#add('udalov/kotlin-vim')
 call dein#add('junegunn/fzf.vim')
 call dein#add('jackguo380/vim-lsp-cxx-highlight')
 call dein#add('ziglang/zig.vim')
+call dein#add('wsdjeg/dein-ui.vim')
+call dein#add('liuchengxu/vim-which-key', {'lazy': 1, 'on_cmd': ['WhichKey', 'WhichKey!']})
 
 call dein#end()
 "call maktaba#plugin#Detect()
@@ -209,6 +210,7 @@ map <F4> :emenu <C-Z>
 au BufRead,BufNewFile * let b:start_time=localtime()
 set completeopt=menuone
 set shada=!,'150,<100,/50,:50,r/tmp,s256
+set timeoutlen=300
 "au FileType c,cpp,vim let w:mcc=matchadd('ColorColumn', '\%81v', 100)
 
 set smartindent
@@ -231,6 +233,10 @@ if $XDG_CONFIG_DIR != ""
 	let g:nvim_config_dir = $XDG_CONFIG_DIR."/nvim"
 endif
 
+if $COLORTERM == "truecolor"
+	set termguicolors
+endif
+
 
 filetype plugin on
 filetype plugin indent on
@@ -238,6 +244,14 @@ filetype plugin indent on
 "autocmd! BufWritePost * Neomake
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent! loadview
+"}}}
+
+"{{{ General
+let g:mapleader = "\<SPACE>"
+let g:maplocalleader = ","
+
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 "}}}
 
 "{{{ Plugin configurations
@@ -267,8 +281,6 @@ let g:vim_parinfer_globs = [ "*.el", "*.lisp", "*.scm" ]
 let g:coc_global_extensions = [ "coc-rust-analyzer", "coc-lists", "coc-json", "coc-tsserver", "coc-syntax", "coc-snippets", "coc-clangd" ]
 "}}}
 "{{{ Arpeggio
-tnoremap <leader><ESC> <C-\><C-n>
-tnoremap <leader>vst <C-\><C-n>:vsplit \| term<CR>
 function! s:chords_setup()
 	Arpeggio inoremap ji <ESC>
 	Arpeggio inoremap jk <C-\><C-O>:close<CR>
@@ -374,43 +386,36 @@ noremap  <buffer> <silent> <Up>   gk
 noremap  <buffer> <silent> <Down> gj
 noremap  <buffer> <silent> <Home> g<Home>
 noremap  <buffer> <silent> <End>  g<End>
-nnoremap <space> :
 inoremap <C-p> <C-\><C-O>:Files<CR>
 nnoremap <C-p> :Files<CR>
-"autocmd CursorHold *.c call s:lc_hover()
-"autocmd CursorMoved *.c call HideTooltip()
-"noremap <silent><c-t> :call <SID>lc_hover()<CR>
 
 inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
 "vmap <LeftRelease> "*ygv
 "}}}
 
-"{{{ ncm2 mappings
-
-"imap <c-k> <Plug>(ncm2_expand_longest)
-
-"inoremap <expr> <Plug>(ncm2_expand_longest) Ncm2ExpandLongest()
-"}}}
 
 "{{{ completion related mappings
 imap <expr><CR>  "\<CR>\<Plug>AutoPairsReturn"
-
-"inoremap <expr><C-h>
-"\ deoplete#mappings#smart_close_popup()."\<C-h>"
-
-"inoremap <expr><BS>
-"\ deoplete#mappings#smart_close_popup()."\<C-h>"
 
 imap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>is_whitespace() ? "\<TAB>" : coc#refresh()
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <F7> <C-\><C-O>:Neomake<CR>
 nnoremap <F7> :Neomake<CR>
-
 "}}}
-"
+
+"{{{
+nnoremap <leader>lf <C-\><C-O>:call CocAction("format")<CR>
+"}}}
+
 "{{{commands
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+"}}}
+
+"{{{ Terminal
+tnoremap <Esc><Esc> <C-\><C-n>
+tnoremap <Esc>vs <C-\><C-n>:vsplit \| term<CR>
+autocmd TermOpen * setlocal timeoutlen=1000
 "}}}
 
 "List Char
