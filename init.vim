@@ -1,12 +1,4 @@
 "{{{ Utility functions
-function! UPDATE_TAGS() "{{{
-	let _f_=expand("%:p")
-	let _cmd_='ctags -a -f ./tags --fields=+lKiSz --c-kinds=cdefgmnpstuvx --c++-kinds=cdefgmnpstuvx --extra=+q  ' . '"' . _f_ . '"'
-	let _resp=system(_cmd_)
-	unlet _cmd_
-	unlet _f_
-	unlet _resp
-endfunction "}}}
 
 function! s:is_whitespace() "{{{
 	let col = col('.') - 1
@@ -135,7 +127,6 @@ au BufNewFile,BufRead meson_options.txt set filetype=meson
 
 "{{{ Misc mappings
 map <silent> <C-N> :let @/=""<CR>
-map <F2> :!/usr/bin/ctags -R --fields=+lKiSz --c-kinds=+cdefgmnpstuvx --c++-kinds=+cdefgmnpstuvx --extra=+q .<CR>
 
 inoremap <F6> <c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a
 "vmap <LeftRelease> "*ygv

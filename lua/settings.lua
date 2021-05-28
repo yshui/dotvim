@@ -154,8 +154,8 @@ g['AutoPairsMapCR'] = 0
 map('n', '<leader>', ':<c-u>WhichKey \'<Space>\'<CR>', { silent = true })
 map('n', '<localleader>', ':<c-u>WhichKey  \',\'<CR>', { silent = true })
 
-map('i', '<F8>', '<C-\\><C-O>:TagbarToggle<CR>', { silent = true })
-map('n', '<F8>', ':TagbarToggle<CR>', { silent = true })
+map('i', '<F8>', '<C-\\><C-O>:Vista coc<CR>', { silent = true })
+map('n', '<F8>', ':Vista coc<CR>', { silent = true })
 map('', '<Up>', 'gk', { silent = true, buffer = true })
 map('', '<Down>', 'gj', { silent = true, buffer = true })
 map('', '<Home>', 'g<Home>', { silent = true, buffer = true })

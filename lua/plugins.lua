@@ -26,7 +26,6 @@ use 'vim-airline/vim-airline'
 use { 'vim-airline/vim-airline-themes', requires = { 'vim-airline' }}
 use 'bling/vim-bufferline'
 use { 'ternjs/tern_for_vim', run = 'npm install' }
-use 'majutsushi/tagbar'
 use 'kana/vim-arpeggio'
 use 'editorconfig/editorconfig-vim'
 use 'udalov/kotlin-vim'
@@ -35,4 +34,5 @@ use 'jackguo380/vim-lsp-cxx-highlight'
 use 'ziglang/zig.vim'
 use 'wsdjeg/dein-ui.vim'
 use { 'liuchengxu/vim-which-key', opt = true, cmd = { 'WhichKey' }}
+use 'liuchengxu/vista.vim'
 end)
