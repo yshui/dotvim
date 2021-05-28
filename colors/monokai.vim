@@ -22,7 +22,7 @@ hi VertSplit ctermfg=241 ctermbg=241 cterm=NONE guifg=#64645e guibg=#64645e gui=
 hi MatchParen ctermfg=197 ctermbg=NONE cterm=underline guifg=#f92672 guibg=NONE gui=underline
 hi StatusLine ctermfg=231 ctermbg=241 cterm=bold guifg=#f8f8f2 guibg=#64645e gui=bold
 hi StatusLineNC ctermfg=231 ctermbg=241 cterm=NONE guifg=#f8f8f2 guibg=#64645e gui=NONE
-hi Pmenu ctermfg=NONE ctermbg=235 cterm=NONE guifg=NONE guibg=NONE gui=NONE
+hi Pmenu ctermfg=NONE ctermbg=235 cterm=NONE guifg=NONE guibg=#262600 gui=NONE
 hi PmenuSel ctermfg=NONE ctermbg=59 cterm=NONE guifg=NONE guibg=#49483e gui=NONE
 hi IncSearch term=reverse cterm=reverse ctermfg=193 ctermbg=16 gui=reverse guifg=#C4BE89 guibg=#000000
 hi Search term=reverse cterm=NONE ctermfg=231 ctermbg=24 gui=NONE guifg=#f8f8f2 guibg=#204a87
@@ -34,7 +34,7 @@ hi Boolean ctermfg=141 ctermbg=NONE cterm=NONE guifg=#ae81ff guibg=NONE gui=NONE
 hi Character ctermfg=141 ctermbg=NONE cterm=bold guifg=#ae81ff guibg=NONE gui=bold
 hi Comment ctermfg=242 ctermbg=233 cterm=NONE guifg=#75715e guibg=#121212 gui=NONE
 hi Conditional ctermfg=197 ctermbg=NONE cterm=NONE guifg=#f92672 guibg=NONE gui=NONE
-hi Constant ctermfg=NONE ctermbg=NONE cterm=bold guifg=NONE guibg=NONE gui=NONE
+hi Constant ctermfg=NONE ctermbg=NONE cterm=bold guifg=NONE guibg=NONE gui=bold
 hi Define ctermfg=197 ctermbg=NONE cterm=bold guifg=#f92672 guibg=NONE gui=bold
 hi DiffAdd ctermfg=231 ctermbg=64 cterm=bold guifg=#f8f8f2 guibg=#46830c gui=bold
 hi DiffDelete ctermfg=88 ctermbg=NONE cterm=NONE guifg=#8b0807 guibg=NONE gui=NONE
@@ -48,14 +48,14 @@ hi Identifier ctermfg=81 ctermbg=NONE cterm=BOLD guifg=#66d9ef guibg=NONE gui=it
 hi Variable ctermfg=white ctermbg=NONE cterm=BOLD guifg=#66d9ef guibg=NONE gui=italic,bold
 hi Keyword ctermfg=197 ctermbg=NONE cterm=bold guifg=#f92672 guibg=NONE gui=bold
 hi Label ctermfg=186 ctermbg=NONE cterm=bold guifg=#e6db74 guibg=NONE gui=bold
-hi NonText ctermfg=59 ctermbg=NONE cterm=NONE guifg=#49483e guibg=#31322c gui=NONE
+hi NonText ctermfg=59 ctermbg=NONE cterm=NONE guifg=#49483e guibg=NONE gui=NONE
 hi Number ctermfg=141 ctermbg=NONE cterm=BOLD guifg=#ae81ff guibg=NONE gui=bold
 hi Operator ctermfg=197 ctermbg=NONE cterm=NONE guifg=#f92672 guibg=NONE gui=NONE
 hi PreProc ctermfg=197 ctermbg=NONE cterm=NONE guifg=#f92672 guibg=NONE gui=NONE
 hi Special ctermfg=231 ctermbg=NONE cterm=BOLD guifg=#f8f8f2 guibg=NONE gui=bold
-hi SpecialComment ctermfg=254 ctermbg=24 cterm=bold guifg=#75715e guibg=#005f87 gui=NONE
+hi SpecialComment ctermfg=254 ctermbg=24 cterm=bold guifg=#e4e4e4 guibg=#005f87 gui=BOLD
 hi SpecialKey ctermfg=59 ctermbg=237 cterm=NONE guifg=#49483e guibg=#3c3d37 gui=NONE
-hi Whitespace ctermfg=254 ctermbg=NONE cterm=NONE guifg=#49483e guibg=#3c3d37 gui=NONE
+hi Whitespace ctermfg=254 ctermbg=NONE cterm=NONE guifg=#89887e guibg=NONE gui=NONE
 hi Statement ctermfg=197 ctermbg=NONE cterm=bold guifg=#f92672 guibg=NONE gui=bold
 hi StorageClass ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=italic
 hi String ctermfg=186 ctermbg=NONE cterm=NONE guifg=#e6db74 guibg=NONE gui=NONE
