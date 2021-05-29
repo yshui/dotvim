@@ -1,7 +1,9 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
+
 return require('packer').startup(function()
 
+use 'nvim-treesitter/nvim-treesitter'
 use 'wbthomason/packer.nvim'
 use 'bhurlow/vim-parinfer'
 use 'roxma/nvim-yarp'
@@ -30,7 +32,6 @@ use 'kana/vim-arpeggio'
 use 'editorconfig/editorconfig-vim'
 use 'udalov/kotlin-vim'
 use 'junegunn/fzf.vim'
-use 'jackguo380/vim-lsp-cxx-highlight'
 use 'ziglang/zig.vim'
 use 'wsdjeg/dein-ui.vim'
 use { 'liuchengxu/vim-which-key', opt = true, cmd = { 'WhichKey' }}
