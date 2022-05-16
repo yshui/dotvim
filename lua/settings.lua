@@ -1,4 +1,15 @@
-require('pl')
+require'pl'
+require'lspsettings'
+
+-- {{{ lspsaga
+local lspsaga = require 'lspsaga'
+lspprovider = require'lspsaga.provider'
+codeaction = require'lspsaga.codeaction'
+lsphover = require'lspsaga.hover'
+lsprename = require'lspsaga.rename'
+lspdiag = require'lspsaga.diagnostic'
+
+-- }}}
 
 local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
@@ -6,6 +17,12 @@ local g = vim.g      -- a table to access global variables
 local v = vim.v
 
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
+
+local function arpeggio(modes, key, sequence)
+    for _, m in ipairs(modes) do
+        vim.api.nvim_command(string.format("Arpeggio %snoremap %s %s", m, key, sequence))
+    end
+end
 
 local function opt_(scope, key, value)
   if value == nil then
@@ -57,13 +74,14 @@ optw 'list'
 opt('mouse', 'a')
 opt('backspace', '2')
 opt('timeoutlen', 300)
+opt('updatetime', 500)
 opt('showmode', false)
 opt('tags', 'tags;/')
 opt('clipboard', 'unnamedplus')
 opt('guifont', 'Iosevka:h12')
 opt('titlestring', '%f - NVIM')
 opt('grepprg', 'grep -nH $*')
-opt('completeopt', 'menuone')
+opt('completeopt', 'menu,menuone,noselect')
 opt('listchars', 'tab:>-,trail:-,extends:>')
 opt('backupdir', path.join(HOME, '.vimf', 'backup')..',.')
 opt('directory', path.join(HOME, '.vimf', 'swap')..',.')
@@ -81,6 +99,8 @@ end
 
 -- }}}
 
+require'plugins'
+
 -- }}}
 
 -- {{{ General
@@ -89,7 +109,7 @@ g['maplocalleader'] = ','
 
 -- }}}
 
--- {{{ Plugin configurations
+-- {{{ Plugin configurationsArpeggio inoremap wq <cmd>wq<CR>
 -- {{{ Clang paths
 local clang_path = '/usr/lib/libclang.so'
 g['chromatica#libclang_path'] = clang_path
@@ -110,21 +130,6 @@ g['EditorConfig_preserve_formatoptions'] =1
 g['vim_parinfer_filetypes'] = {}
 g['vim_parinfer_globs'] = { "*.el", "*.lisp", "*.scm" }
 --- }}}
-
--- {{{ Coc
-g['coc_global_extensions'] = { "coc-rust-analyzer", "coc-lists", "coc-json", "coc-tsserver", "coc-syntax", "coc-snippets", "coc-clangd" }
-g['coc_snippet_next'] = '<C-l>'
-g['coc_snippet_prev'] = '<C-h>'
--- }}}
-
--- {{{ airline
-g['airline_powerline_fonts'] = 1
-g['airline_theme'] = 'wombat'
--- }}}
-
--- {{{ clang-format
-g['clang_format#detect_style_file'] = 1
--- }}}
 
 -- {{{ SudoEdit
 g['sudo_askpass'] = '/usr/lib/seahorse/ssh-askpass'
@@ -167,7 +172,46 @@ map('n', ';', ':')
 
 -- }}}
 
-local ts = require 'nvim-treesitter.configs'
-ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
+-- {{{ Arpeggio
+function arpeggio_setup()
+    arpeggio({'i', ''}, 'wq', '<cmd>wq<CR>')
+    arpeggio({'i', ''}, 'wr', '<cmd>w<CR>')
+    arpeggio({'i', ''}, 'fq', '<cmd>q!<CR>')
+    arpeggio({'i', ''}, 'qt', '<cmd>q<CR>')
+    arpeggio({'i', ''}, 'jk', '<cmd>close<CR>')
+    arpeggio({'i'}, 'ji', '<ESC>')
+    arpeggio({'i', ''}, 'eo0', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+    arpeggio({'i', ''}, 'ei0', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+    arpeggio({'i', ''}, 'ac0', '<cmd>lua codeaction.code_action()<CR>')
+    arpeggio({'i', ''}, 'har', '<cmd>lua lsphover.render_hover_doc()<CR>')
+    arpeggio({'i', ''}, 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+    arpeggio({'i', ''}, 'pd', '<cmd>lua lspprovider.preview_definition()<CR>')
+    arpeggio({'i', ''}, 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+    arpeggio({'i', ''}, 'ref', '<cmd>lua lspprovider.lsp_finder()<CR>')
+    arpeggio({'i', ''}, 'rn', '<cmd>lua lsprename.rename()<CR>')
+    arpeggio({'i', ''}, 'fm', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+    arpeggio({'x'}, 'fm', '<cmd>lua vim.lsp.buf.range_formatting()<CR>')
+end
+
+vim.api.nvim_command('autocmd VimEnter * lua arpeggio_setup()')
+-- }}}
+
+-- {{{ lspsaga
+vim.api.nvim_command('autocmd CursorHold * lua lspdiag.show_cursor_diagnostics()')
+vim.api.nvim_command('autocmd CursorHoldI * lua lspdiag.show_cursor_diagnostics()')
+-- }}}
+
+local lsp_status = require'lsp-status'
+local function lsp_progress()
+    return lsp_status.status_progress()
+end
+require'lualine'.setup{sections = { lualine_c = {'filename', lsp_progress} } }
+
+--[[
+vim.lsp.set_log_level 'trace'
+if vim.fn.has 'nvim-0.5.1' == 1 then
+    require('vim.lsp.log').set_format_func(vim.inspect)
+end
+--]]
 
 -- vim: foldmethod=marker foldenable
